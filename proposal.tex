@@ -5,6 +5,7 @@
 %\input {inc0gnito.sty}
 
 \useoutertheme{infolines}
+\usepackage{ulem}
 
 \input {commonpackages.tex}
 
@@ -19,7 +20,7 @@
   colorlinks, linkcolor=blue
 }
 
-\title {HTTP CGI server / demo app proposal}
+\title {HTTP / CGI web server \& app proposal}
 \input {beamauthor.tex}
 
 \AtBeginSection[]
@@ -37,36 +38,65 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{0x01 - Why we choosed the HTTP server / CGI guest book}
+  \frametitle{0x00 - What is HTTP / CGI?}
   \framesubtitle{TCP 80}
 
-  Why HTTP
+  What is HTTP/1.0 and CGI/1.1?
+
+  \begin{itemize}
+    \item<1-> HTTP/1.0: a wishy-washy protocol based on common usage that IESG apparently "has concerns" about.
+    \item<2-> CGI/1.1: some dumb Apache memo on making old web apps vulnerable to DDoS attacks.
+    \item<3-> Both: Protocols used for stuffs.
+    \item<3-> Non-binding, World-Wide Web, lorem ipsum.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{0x01 - Our idea: a HTTP / CGI guest book server}
+  \framesubtitle{TCP 80}
+
+  So you can tell your friend you wired them the money.
+
+  \begin{itemize}
+    \item<1-> Open to expansion:
+    \item<2-> File/FTP server
+    \item<3-> \sout{Chat server} IRC server
+    \item<4-> Database, webhook...
+    \item<5-> ...and many more
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{0x02 - Why build a HTTP / CGI guest book server?}
+  \framesubtitle{TCP 80}
+
+  Why HTTP/1.0
 
   \begin{itemize}
     \item<1-> Basic socket programming
-    \item<2-> ...But it also requires some parsing, child process management, etc
+    \item<2-> ...but it also requires some parsing, child process management, etc.
     \item<3-> Will be an interesting project to implement
-    \item<3-> (and also able to hide vulns in creative way)
+    \item<3-> (we can hide vulnerabilities in creative ways)
   \end{itemize}
 \end{frame}
 
 \begin{frame}
-  \frametitle{0x01 - Why we choosed the HTTP server / CGI}
+  \frametitle{0x02 - Why build a HTTP / CGI guest book server?}
   \framesubtitle{Common Gateway Interface}
 
-  Why CGI
+  Why CGI/1.1
 
   \begin{itemize}
-    \item<1-> Old fashioned way to develop Web app
-    \item<2-> Uses envvar, pipe to transfer data between app and server
-    \item<3-> For demonstration purpose + way to hide some vulns in it
-    \item<4-> Able to make exploiting much more challenging depend on implementation
+    \item<1-> Old-fashioned way to develop web apps
+    \item<2-> Use \textit{env vars} and \textit{pipes} to transfer data between client and server
+    \item<3-> For demonstration purposes + a way to hide some vulns in it
+    \item<4-> Opens up making challenging low-level exploits depending on implementation
   \end{itemize}
 \end{frame}
 
 \begin{frame}
-  \frametitle{0x02 - Overall architecture}
-  \framesubtitle{}
+  \frametitle{0x03 - Overall architecture}
+  \framesubtitle{GNA's Not Apache!}
 
   \centering
   \begin{tikzpicture}
@@ -81,30 +111,51 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{0x03 - Features}
+  \frametitle{0x04 - Features}
   \framesubtitle{HTTP server}
 
   Features for the HTTP server
 
   \begin{itemize}
-    \item<1-> We will not implement whole RFC 1945 (HTTP/1.0).
-    \item<2-> Instead, implement \textit{subset} of the RFC 1945, barely able to serve the page
-    \item<3-> Also, we will not implement whole RFC 3875 (CGI 1.1)
-    \item<4-> Instead, implement \textit{subset} of the RFC 3875, barely able to run our CGI app
-    \item<5-> Will be implemented without using any off-the-shelf libraries (planned)
+    \item<1-> We will not implement the whole of RFC 1945 (HTTP/1.0).
+    \item<2-> Instead, a \textit{subset} of RFC 1945 barely able to serve the page.
+    \item<3-> An original implementation without using any off-the-shelf libraries (planned)
   \end{itemize}
 \end{frame}
 
 \begin{frame}
-  \frametitle{0x03 - Features}
+  \frametitle{0x04 - Features}
+  \framesubtitle{CGI/1.1 program}
+
+  Features for the CGI
+
+  \begin{itemize}
+    \item<1-> Likewise, we will not implement the whole of RFC 3875 (CGI/1.1).
+    \item<2-> Instead, a \textit{subset} of RFC 3875 barely able to run our CGI app.
+    \item<3-> Again, an original implementation (planned)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{0x04 - Features}
   \framesubtitle{CGI guest book}
 
   Features for the CGI guest book app
   \begin{itemize}
-    \item<1-> Take user input(nickname, message) through HTTP POST
-    \item<2-> Store given data into the TSV-based simple data storage
-    \item<3-> Implement CGI interface \& basic rendering engine
-    \item<3-> libCGI will be used to parse CGI envvar / HTTP body (planned)
+    \item<1-> Takes user input \textit{\{nickname, message\}} using POST
+    \item<2-> Stores given data into a simple TSV/redis-based data storage
+    \item<3-> Implements CGI/1.1 \& a basic rendering engine
+    \item<3-> libCGI will be used to parse CGI env vars/message-body (planned)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{0x05 - Questions?}
+  \framesubtitle{Thank you for listening!}
+
+  Are there any questions?
+  \begin{itemize}
+    \item<1-> Thank you for your attention.
   \end{itemize}
 \end{frame}
 
